@@ -1,45 +1,59 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { SheetProvider } from 'react-native-actions-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import QueryClientProviderWrapper from './src/services/tanstackQuery/QueryClientProviderWrapper';
+import { NavigationContainers } from './src/navigation/NavigationContainers';
+import { StatusBar } from 'react-native';
+import { toastConfig } from './src/utils/toastConfig';
+import Toast from 'react-native-toast-message';
+import { createNavigationContainerRef } from '@react-navigation/native';
+import { Screens } from './src/types';
+import { useAuthSessionManager } from './src/hooks/useAuthSessionManager';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+export const navigationRef = createNavigationContainerRef();
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+export const resetToSignIn = () => {
+  if (navigationRef.isReady()) {
+    navigationRef.reset({
+      index: 0,
+      routes: [{ name: Screens.SignIn }],
+    });
+  } else {
+    setTimeout(() => {
+      if (navigationRef.isReady()) {
+        navigationRef.reset({
+          index: 0,
+          routes: [{ name: Screens.SignIn }],
+        });
+      }
+    }, 500);
+  }
+};
 
+const AuthSessionManager = () => {
+  useAuthSessionManager();
+  return null;
+};
+
+function App(): React.JSX.Element {
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
+    <QueryClientProviderWrapper>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SheetProvider>
+          <>
+            <StatusBar
+              translucent={true}
+              backgroundColor="transparent"
+              barStyle="dark-content"
+            />
+            <NavigationContainers />
+            <AuthSessionManager />
+            <Toast config={toastConfig} />
+          </>
+        </SheetProvider>
+      </GestureHandlerRootView>
+    </QueryClientProviderWrapper>
   );
 }
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
