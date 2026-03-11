@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseToastProps } from 'react-native-toast-message';
 import Toast from 'react-native-toast-message';
-import { ErrorToast, SuccessToast, WarningToast, InfoToast } from '../view/components/ui/CustomToast/CustomToast';
+import { ErrorToast, SuccessToast, WarningToast, InfoToast } from '../components/CustomToast/CustomToast';
 
 export const toastConfig = {
     // Error Toast

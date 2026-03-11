@@ -1,26 +1,33 @@
-import Toast from 'react-native-simple-toast';
+import Toast from 'react-native-toast-message';
 
 type ToastData = string | null | undefined;
 
 const sanitizeMessage = (data: ToastData): string => data ?? '';
 
+// For short messages, we'll map them to a simple 'info' toast with duration
 export const ShortTopToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.SHORT, Toast.TOP);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'top', visibilityTime: 2000 });
 
 export const LongTopToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.LONG, Toast.TOP);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'top', visibilityTime: 4000 });
 
 export const ShortCenterToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.SHORT, Toast.CENTER);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'top', visibilityTime: 2000 });
 
 export const LongCenterToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.LONG, Toast.CENTER);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'top', visibilityTime: 4000 });
 
 export const ShortBottomToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.SHORT, Toast.BOTTOM);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'bottom', visibilityTime: 2000 });
 
 export const LongBottomToaster = (data: ToastData) =>
-    Toast.showWithGravity(sanitizeMessage(data), Toast.LONG, Toast.BOTTOM);
+    Toast.show({ type: 'info', text1: sanitizeMessage(data), position: 'bottom', visibilityTime: 4000 });
+
+export const ErrorToaster = (data: ToastData) =>
+    Toast.show({ type: 'error', text1: sanitizeMessage(data), position: 'bottom', visibilityTime: 3000 });
+
+export const SuccessToaster = (data: ToastData) =>
+    Toast.show({ type: 'success', text1: sanitizeMessage(data), position: 'bottom', visibilityTime: 3000 });
 
 // Optional adapter object for legacy usage
 export const ToastAdapter = {
@@ -30,10 +37,6 @@ export const ToastAdapter = {
     LongCenterToaster,
     ShortBottomToaster,
     LongBottomToaster,
+    ErrorToaster,
+    SuccessToaster,
 };
-
-
-// Usage examples:
-// Traditional way (still works)
-// import { ToastAdapter } from '../../adapter';
-// ToastAdapter.ShortBottomToaster('Hello');
