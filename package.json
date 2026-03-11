@@ -2,16 +2,23 @@
   "name": "TechExactly",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "android": "ENVFILE=.env.development react-native run-android",
-    "android:staging": "ENVFILE=.env.staging react-native run-android",
-    "android:prod": "ENVFILE=.env.production react-native run-android",
-    "start": "react-native start",
-    "start:reset": "react-native start --reset-cache",
-    "ios": "ENVFILE=.env.development react-native run-ios",
-    "lint": "eslint .",
-    "test": "jest"
-  },
+"scripts": {
+  "android": "ENVFILE=.env.development react-native run-android",
+  "android:staging": "ENVFILE=.env.staging react-native run-android",
+  "android:prod": "ENVFILE=.env.production react-native run-android",
+
+  "build:apk:dev": "cd android && ENVFILE=.env.development ./gradlew assembleDebug",
+  "build:apk:staging": "cd android && ENVFILE=.env.staging ./gradlew assembleRelease",
+  "build:apk:prod": "cd android && ENVFILE=.env.production ./gradlew assembleRelease",
+
+  "build:aab:prod": "cd android && ENVFILE=.env.production ./gradlew bundleRelease",
+
+  "start": "react-native start",
+  "start:reset": "react-native start --reset-cache",
+  "ios": "ENVFILE=.env.development react-native run-ios",
+  "lint": "eslint .",
+  "test": "jest"
+},
   "dependencies": {
     "@react-native-community/netinfo": "^12.0.1",
     "@react-native-firebase/app": "^23.8.6",
